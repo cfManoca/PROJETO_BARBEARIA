@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+
+    <!-- Menu lateral — usado em todas as telas -->
+
+    <aside th:fragment="menu-lateral(pagina)" class="barra-lateral">
+        <div class="topo-lateral">
+            <span class="marca">BARBEARIA BECO 7</span>
+            <button type="button" class="botao-menu" aria-label="Abrir menu" aria-expanded="false">&#9776;</button>
+        </div>
+
+        <nav class="menu-links">
+            <a th:href="@{/}" th:classappend="${pagina == 'dashboard'} ? 'ativo'">Dashboard</a>
+            <a th:href="@{/clientes}" th:classappend="${pagina == 'clientes'} ? 'ativo'">Clientes</a>
+            <a th:href="@{/barbeiros}" th:classappend="${pagina == 'barbeiros'} ? 'ativo'">Barbeiros</a>
+            <a th:href="@{/agendamento}" th:classappend="${pagina == 'agendamento'} ? 'ativo'">Agendamento</a>
+        </nav>
+    </aside>
+
+    <!-- Modal genérico de confirmação (cancelamento / exclusão) -->
+    <div th:fragment="modal-confirmacao(id, titulo, mensagem, rotuloBotao)" th:id="${id}" class="sobreposicao-modal">
+        <div class="caixa-modal" role="dialog" aria-modal="true">
+            <h3 th:text="${titulo}">Confirmar ação?</h3>
+            <p data-descricao-modal th:text="${mensagem}">Essa ação não poderá ser desfeita.</p>
+            <form method="post" action="#">
+                <div class="acoes-formulario">
+                    <button type="button" class="botao botao-secundario" data-fechar-modal>Voltar</button>
+                    <button type="submit" class="botao botao-perigo" th:text="${rotuloBotao}">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

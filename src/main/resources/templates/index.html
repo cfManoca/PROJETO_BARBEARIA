@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — Barbearia Beco 7</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+
+<body>
+
+    <div class="app">
+        <div th:replace="~{fragments/comuns :: menu-lateral(pagina='dashboard')}"></div>
+
+        <div class="area-principal">
+            <main class="conteudo">
+                <div class="container">
+                    <div class="pagina-cabecalho">
+                        <div>
+                            <h1>Dashboard</h1>
+                            <p>Resumo do dia e acesso rápido às funções da recepção.</p>
+                        </div>
+                    </div>
+
+                    <div class="metricas">
+                        <div class="metrica">
+                            <span class="numero" th:text="${qtdAgendamentosHoje}">6</span>
+                            <span class="rotulo">Agendamentos hoje</span>
+                        </div>
+                        <div class="metrica">
+                            <span class="numero" th:text="${qtdClientes}">48</span>
+                            <span class="rotulo">Clientes cadastrados</span>
+                        </div>
+                        <div class="metrica">
+                            <span class="numero" th:text="${qtdBarbeiros}">3</span>
+                            <span class="rotulo">Barbeiros na equipe</span>
+                        </div>
+                    </div>
+
+                    <div class="grade-2">
+                        <div class="cartao">
+                            <h3>Próximos agendamentos</h3>
+                            <div class="agenda-lista">
+                                <div class="agenda-linha" th:each="item : ${proximosAgendamentos}">
+                                    <span class="hora" th:text="${item.horario}">14:00</span>
+                                    <span th:text="${item.cliente} + ' · ' + ${item.servico}">João Silva · Corte</span>
+                                    <span class="selo" th:classappend="'selo-' + ${item.statusCss}"
+                                        th:text="${item.status}">Confirmado</span>
+                                </div>
+                                <p class="vazio" th:if="${#lists.isEmpty(proximosAgendamentos)}">Nenhum agendamento para
+                                    hoje.</p>
+                            </div>
+                        </div>
+
+                        <div class="cartao">
+                            <h3>Acesso rápido</h3>
+                            <div class="atalhos">
+                                <a th:href="@{/clientes}" class="atalho">
+                                    <strong>Clientes</strong>
+                                    <span>Listar e cadastrar</span>
+                                </a>
+                                <a th:href="@{/barbeiros}" class="atalho">
+                                    <strong>Barbeiros</strong>
+                                    <span>Listar e cadastrar</span>
+                                </a>
+                                <a th:href="@{/agendamento}" class="atalho">
+                                    <strong>Agendamento</strong>
+                                    <span>Marcar horário</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script th:src="@{/js/app.js}" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,690 @@
+/* 
+   BARBEARIA BECO 7 — folha de estilo principal (sistema interno da recepção)
+ */
+
+:root {
+    --preto: #0D0D0D;
+    --grafite: #242424;
+    --grafite-claro: #313131;
+    --verde: #0F5B3A;
+    --verde-claro: #167048;
+    --dourado: #D6A72C;
+    --dourado-claro: #e6bc4d;
+    --off-white: #F2F0E8;
+    --off-white-sutil: #b9b6ac;
+    --vermelho: #b8433a;
+    --vermelho-claro: #cf584e;
+
+    --fonte-titulo: "Oswald", "Arial Narrow", sans-serif;
+    --fonte-texto: "Work Sans", Arial, sans-serif;
+
+    --raio: 6px;
+    --sombra: 0 4px 14px rgba(0, 0, 0, 0.35);
+    --largura-lateral: 220px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--preto);
+    color: var(--off-white);
+    font-family: var(--fonte-texto);
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin: 0 0 0.5em;
+    color: var(--off-white);
+}
+
+h1 {
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
+}
+
+h2 {
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+}
+
+h3 {
+    font-size: 1.15rem;
+}
+
+p {
+    margin: 0 0 1em;
+}
+
+a {
+    color: var(--dourado);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+:focus-visible {
+    outline: 3px solid var(--dourado);
+    outline-offset: 2px;
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+}
+
+.conteudo {
+    padding: 32px 0 64px;
+}
+
+/*
+ Layout — menu lateral
+*/
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.barra-lateral {
+    width: var(--largura-lateral);
+    min-width: var(--largura-lateral);
+    background: var(--grafite);
+    border-right: 3px solid var(--verde);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.topo-lateral {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 18px;
+}
+
+.marca {
+    font-family: var(--fonte-titulo);
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    color: var(--off-white);
+}
+
+.botao-menu {
+    display: none;
+    background: none;
+    border: 2px solid var(--off-white);
+    border-radius: var(--raio);
+    color: var(--off-white);
+    width: 40px;
+    height: 36px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 12px;
+}
+
+.menu-links a {
+    color: var(--off-white);
+    padding: 12px 14px;
+    border-radius: var(--raio);
+    font-size: 0.95rem;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.menu-links a:hover {
+    background: var(--grafite-claro);
+    text-decoration: none;
+    color: var(--dourado);
+}
+
+.menu-links a.ativo {
+    background: var(--verde);
+    color: var(--off-white);
+}
+
+.area-principal {
+    flex: 1;
+    min-width: 0;
+}
+
+/*
+ Botões
+*/
+
+.botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border: 2px solid transparent;
+    border-radius: var(--raio);
+    font-family: var(--fonte-texto);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.botao:hover {
+    text-decoration: none;
+    filter: brightness(1.1);
+}
+
+.botao:active {
+    transform: translateY(1px);
+}
+
+.botao-primario {
+    background: var(--dourado);
+    border-color: var(--dourado);
+    color: var(--preto);
+}
+
+.botao-secundario {
+    background: transparent;
+    border-color: var(--off-white-sutil);
+    color: var(--off-white);
+}
+
+.botao-perigo {
+    background: transparent;
+    border-color: var(--vermelho-claro);
+    color: var(--vermelho-claro);
+}
+
+.botao-perigo:hover {
+    background: var(--vermelho-claro);
+    color: var(--preto);
+}
+
+.botao-pequeno {
+    padding: 6px 12px;
+    font-size: 0.82rem;
+}
+
+button:disabled,
+.botao[disabled] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    filter: none;
+}
+
+/*
+ Cards / painéis
+*/
+
+.cartao {
+    background: var(--grafite);
+    border-radius: var(--raio);
+    padding: 24px;
+    box-shadow: var(--sombra);
+}
+
+.grade-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.pagina-estreita {
+    max-width: 480px;
+    margin: 40px auto;
+}
+
+.pagina-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.pagina-cabecalho p {
+    color: var(--off-white-sutil);
+    margin: 4px 0 0;
+}
+
+/* Métricas do painel */
+
+.metricas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.metrica {
+    background: var(--grafite);
+    border-radius: var(--raio);
+    padding: 18px;
+    text-align: left;
+    border-top: 3px solid var(--verde);
+}
+
+.metrica .numero {
+    font-family: var(--fonte-titulo);
+    font-size: 2rem;
+    color: var(--dourado);
+    display: block;
+}
+
+.metrica .rotulo {
+    color: var(--off-white-sutil);
+    font-size: 0.85rem;
+}
+
+/* Atalhos do painel */
+
+.atalhos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+}
+
+.atalho {
+    background: var(--grafite);
+    border: 1px solid var(--grafite-claro);
+    border-radius: var(--raio);
+    padding: 18px;
+    color: var(--off-white);
+    text-align: left;
+    transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.atalho:hover {
+    border-color: var(--dourado);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.atalho strong {
+    display: block;
+    font-family: var(--fonte-titulo);
+    font-size: 1.05rem;
+}
+
+.atalho span {
+    color: var(--off-white-sutil);
+    font-size: 0.85rem;
+}
+
+/*
+ Formulários
+ */
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+label {
+    font-size: 0.88rem;
+    color: var(--off-white-sutil);
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--grafite-claro);
+    border-radius: var(--raio);
+    background: var(--preto);
+    color: var(--off-white);
+    font-family: var(--fonte-texto);
+    font-size: 0.95rem;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #6b6b64;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--dourado);
+}
+
+.acoes-formulario {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.mensagem {
+    padding: 12px 14px;
+    border-radius: var(--raio);
+    font-size: 0.92rem;
+}
+
+.mensagem.erro {
+    background: rgba(184, 67, 58, 0.2);
+    border: 1px solid var(--vermelho);
+    color: #f3c3bf;
+}
+
+/* Grade de horários (tela de agendamento) */
+
+.grade-horarios {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    gap: 10px;
+}
+
+.horario-opcao {
+    background: var(--preto);
+    border: 1px solid var(--grafite-claro);
+    border-radius: var(--raio);
+    padding: 10px 6px;
+    text-align: center;
+    color: var(--off-white);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.horario-opcao:hover {
+    border-color: var(--dourado);
+}
+
+.horario-opcao.selecionado {
+    background: var(--verde);
+    border-color: var(--verde);
+}
+
+.resumo-agendamento {
+    display: grid;
+    gap: 10px;
+}
+
+.resumo-linha {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed var(--grafite-claro);
+    padding-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.resumo-linha span:first-child {
+    color: var(--off-white-sutil);
+}
+
+/*
+ Tabelas
+*/
+
+.tabela-responsiva {
+    overflow-x: auto;
+    background: var(--grafite);
+    border-radius: var(--raio);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+}
+
+th,
+td {
+    padding: 13px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--grafite-claro);
+    font-size: 0.92rem;
+}
+
+th {
+    font-family: var(--fonte-titulo);
+    letter-spacing: 0.3px;
+    color: var(--dourado);
+    font-weight: 500;
+}
+
+tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.acoes-tabela {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.acoes-tabela form {
+    margin: 0;
+}
+
+.vazio {
+    text-align: center;
+    color: var(--off-white-sutil);
+    padding: 28px !important;
+}
+
+/* Cartões-lista para tabelas em telas pequenas */
+.lista-cartoes {
+    display: none;
+}
+
+.item-cartao {
+    background: var(--grafite);
+    border-radius: var(--raio);
+    padding: 16px;
+    margin-bottom: 12px;
+    border-left: 4px solid var(--verde);
+}
+
+.item-cartao .linha {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.item-cartao .linha:last-of-type {
+    border-bottom: none;
+}
+
+.item-cartao .linha span:first-child {
+    color: var(--off-white-sutil);
+}
+
+.item-cartao .acoes-tabela {
+    margin-top: 12px;
+}
+
+/*
+ Badges de status
+ */
+
+.selo {
+    display: inline-block;
+    padding: 4px 11px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.selo-agendado {
+    background: #3a3a3a;
+    color: var(--off-white);
+}
+
+.selo-confirmado {
+    background: rgba(15, 91, 58, 0.3);
+    color: #8fe0b8;
+    border: 1px solid var(--verde);
+}
+
+.selo-concluido {
+    background: var(--verde);
+    color: var(--off-white);
+}
+
+.selo-cancelado {
+    background: rgba(184, 67, 58, 0.2);
+    color: var(--vermelho-claro);
+    border: 1px solid var(--vermelho);
+}
+
+/*
+ Agenda (lista de horários)
+*/
+
+.agenda-lista {
+    display: grid;
+    gap: 8px;
+}
+
+.agenda-linha {
+    display: grid;
+    grid-template-columns: 80px 1fr auto auto;
+    align-items: center;
+    gap: 14px;
+    background: var(--preto);
+    border-radius: var(--raio);
+    padding: 12px 16px;
+}
+
+.agenda-linha .hora {
+    font-family: var(--fonte-titulo);
+    color: var(--dourado);
+}
+
+/*
+ Modal de confirmação
+*/
+
+.sobreposicao-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.sobreposicao-modal.aberto {
+    display: flex;
+}
+
+.caixa-modal {
+    background: var(--grafite);
+    border-top: 4px solid var(--vermelho);
+    border-radius: var(--raio);
+    padding: 26px;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: var(--sombra);
+}
+
+.caixa-modal h3 {
+    margin-bottom: 10px;
+}
+
+.caixa-modal p {
+    color: var(--off-white-sutil);
+}
+
+.caixa-modal .acoes-formulario {
+    justify-content: flex-end;
+    margin-top: 18px;
+}
+
+/*
+ Responsivo — celulares
+*/
+
+@media (max-width: 860px) {
+    .grade-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .app {
+        flex-direction: column;
+    }
+
+    .barra-lateral {
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        position: sticky;
+        border-right: none;
+        border-bottom: 3px solid var(--verde);
+    }
+
+    .botao-menu {
+        display: block;
+    }
+
+    .menu-links {
+        display: none;
+        flex-direction: column;
+    }
+
+    .menu-links.aberto {
+        display: flex;
+    }
+
+    .metricas {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .pagina-cabecalho {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* tabelas viram cartões empilhados no celular */
+    .tabela-responsiva {
+        display: none;
+    }
+
+    .lista-cartoes {
+        display: block;
+    }
+
+    .agenda-linha {
+        grid-template-columns: 1fr;
+        text-align: left;
+        gap: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .metricas {
+        grid-template-columns: 1fr;
+    }
+}
