@@ -6,5 +6,4 @@ import ifba.cabaleleiro.entity.ClienteEntity;
 
 public interface ClienteRepository extends JpaRepository<ClienteEntity, Long> {
     
-
 }
