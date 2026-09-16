@@ -15,4 +15,8 @@ public interface AgendamentoRepository extends JpaRepository<AgendamentoEntity, 
     boolean existsByBarbeiroIdAndDataAndHorarioAndStatusNot(
         Long barbeiroId, LocalDate data, LocalTime horario, String status);
 
+    boolean existsByClienteIdAndStatusNot(Long clienteId, String status);
+
+    boolean existsByBarbeiroIdAndStatusNot(Long barbeiroId, String status);
+
 }

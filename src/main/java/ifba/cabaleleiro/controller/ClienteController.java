@@ -76,8 +76,12 @@ public class ClienteController {
 
     @PostMapping("/{id}/excluir")
     public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        clienteService.apagarCliente(id);
-        redirectAttributes.addFlashAttribute("mensagem", "Cliente excluído com sucesso.");
+        try {
+            clienteService.apagarCliente(id);
+            redirectAttributes.addFlashAttribute("mensagem", "Cliente excluído com sucesso.");
+        } catch (AppCabeleleiroException e) {
+            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+        }
         return "redirect:/clientes";
     }
 }

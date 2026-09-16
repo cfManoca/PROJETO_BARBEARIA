@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ifba.cabaleleiro.dto.BarbeiroDTO;
+import ifba.cabaleleiro.exception.AppCabeleleiroException;
 import ifba.cabaleleiro.service.BarbeiroService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -61,8 +62,12 @@ public class BarbeiroController {
 
     @PostMapping("/{id}/excluir")
     public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        barbeiroService.apagarBarbeiro(id);
-        redirectAttributes.addFlashAttribute("mensagem", "Barbeiro excluído com sucesso.");
+        try {
+            barbeiroService.apagarBarbeiro(id);
+            redirectAttributes.addFlashAttribute("mensagem", "Barbeiro excluído com sucesso.");
+        } catch (AppCabeleleiroException e) {
+            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+        }
         return "redirect:/barbeiros";
     }
 }

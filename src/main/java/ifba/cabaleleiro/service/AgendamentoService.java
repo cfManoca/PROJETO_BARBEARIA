@@ -11,6 +11,7 @@ import ifba.cabaleleiro.entity.AgendamentoEntity;
 import ifba.cabaleleiro.exception.AppCabeleleiroException;
 import ifba.cabaleleiro.mapper.AgendamentoMapper;
 import ifba.cabaleleiro.repository.AgendamentoRepository;
+import ifba.cabaleleiro.repository.BarbeiroRepository;
 import ifba.cabaleleiro.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -20,12 +21,17 @@ public class AgendamentoService {
 
     private final AgendamentoRepository repository;
     private final ClienteRepository clienteRepository;
+    private final BarbeiroRepository barbeiroRepository;
     private final AgendamentoMapper mapper;
 
     public void criarAgendamento(AgendamentoDTO dto) {
         clienteRepository.findById(dto.getClienteId())
             .orElseThrow(() -> new AppCabeleleiroException(
                 MensagemErro.ERRO_CLIENTE_NAO_ENCONTRADO.formatted(dto.getClienteId())));
+
+        barbeiroRepository.findById(dto.getBarbeiroId())
+            .orElseThrow(() -> new AppCabeleleiroException(
+                MensagemErro.ERRO_BARBEIRO_NAO_ENCONTRADO.formatted(dto.getBarbeiroId())));
 
         boolean conflito = repository.existsByBarbeiroIdAndDataAndHorarioAndStatusNot(
             dto.getBarbeiroId(), dto.getData(), dto.getHorario(), StatusAgendamento.CANCELADO);
@@ -62,7 +68,7 @@ public class AgendamentoService {
     }
 
     public long contarAgendamentosHoje() {
-    return repository.findByDataOrderByHorarioAsc(LocalDate.now())
+        return repository.findByDataOrderByHorarioAsc(LocalDate.now())
             .stream()
             .filter(a -> !StatusAgendamento.CANCELADO.equals(a.getStatus()))
             .count();
