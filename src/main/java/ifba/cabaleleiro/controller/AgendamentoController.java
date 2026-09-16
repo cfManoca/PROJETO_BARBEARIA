@@ -31,18 +31,22 @@ public class AgendamentoController {
     }
 
     @PostMapping
-    public String salvar(@Valid AgendamentoDTO agendamento, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String salvar(@Valid AgendamentoDTO agendamento, BindingResult bindingResult, Model model,
+                          RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("erro", "Verifique os dados informados.");
-            return "redirect:/agendamento";
+            carregarTela(model);
+            model.addAttribute("erro", "Verifique os dados informados.");
+            return "agendamento";
         }
         try {
             agendamentoService.criarAgendamento(agendamento);
             redirectAttributes.addFlashAttribute("mensagem", "Agendamento realizado com sucesso.");
+            return "redirect:/agendamento";
         } catch (AppCabeleleiroException e) {
-            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+            carregarTela(model);
+            model.addAttribute("erro", e.getMessage());
+            return "agendamento";
         }
-        return "redirect:/agendamento";
     }
 
     @PostMapping("/{id}")
@@ -54,5 +58,11 @@ public class AgendamentoController {
             redirectAttributes.addFlashAttribute("erro", e.getMessage());
         }
         return "redirect:/agendamento";
+    }
+
+    private void carregarTela(Model model) {
+        model.addAttribute("clientes", clienteService.buscarTodos());
+        model.addAttribute("horariosDisponiveis", AgendamentoConstantes.HORARIOS_DISPONIVEIS);
+        model.addAttribute("agendamentosDoDia", agendamentoService.buscarViewsPorData(LocalDate.now()));
     }
 }

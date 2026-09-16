@@ -31,10 +31,13 @@ public class BarbeiroController {
     }
 
     @PostMapping
-    public String salvar(@Valid BarbeiroDTO barbeiro, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String salvar(@Valid BarbeiroDTO barbeiro, BindingResult bindingResult, Model model,
+                          RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("erro", "Verifique os dados informados.");
-            return "redirect:/barbeiros";
+            model.addAttribute("erro", "Verifique os dados informados.");
+            model.addAttribute("formBarbeiro", barbeiro);
+            model.addAttribute("barbeiros", barbeiroService.buscarTodos());
+            return "barbeiros";
         }
         barbeiroService.criarBarbeiro(barbeiro);
         redirectAttributes.addFlashAttribute("mensagem", "Barbeiro cadastrado com sucesso.");
@@ -42,11 +45,14 @@ public class BarbeiroController {
     }
 
     @PostMapping("/{id}")
-    public String atualizar(@PathVariable Long id, @Valid BarbeiroDTO barbeiro, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String atualizar(@PathVariable Long id, @Valid BarbeiroDTO barbeiro, BindingResult bindingResult,
+                             Model model, RedirectAttributes redirectAttributes) {
         barbeiro.setId(id);
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("erro", "Verifique os dados informados.");
-            return "redirect:/barbeiros";
+            model.addAttribute("erro", "Verifique os dados informados.");
+            model.addAttribute("formBarbeiro", barbeiro);
+            model.addAttribute("barbeiros", barbeiroService.buscarTodos());
+            return "barbeiros";
         }
         barbeiroService.atualizarBarbeiro(barbeiro);
         redirectAttributes.addFlashAttribute("mensagem", "Barbeiro atualizado com sucesso.");

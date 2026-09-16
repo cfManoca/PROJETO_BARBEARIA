@@ -32,34 +32,46 @@ public class ClienteController {
     }
 
     @PostMapping
-    public String salvar(@Valid ClienteDTO cliente, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String salvar(@Valid ClienteDTO cliente, BindingResult bindingResult,
+                          Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("erro", "Verifique os dados informados.");
-            return "redirect:/clientes";
+            model.addAttribute("erro", "Verifique os dados informados.");
+            model.addAttribute("formCliente", cliente);
+            model.addAttribute("clientes", clienteService.buscarTodos());
+            return "clientes";
         }
         try {
             clienteService.criarCliente(cliente);
             redirectAttributes.addFlashAttribute("mensagem", "Cliente cadastrado com sucesso.");
+            return "redirect:/clientes";
         } catch (AppCabeleleiroException e) {
-            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+            model.addAttribute("erro", e.getMessage());
+            model.addAttribute("formCliente", cliente);
+            model.addAttribute("clientes", clienteService.buscarTodos());
+            return "clientes";
         }
-        return "redirect:/clientes";
     }
 
     @PostMapping("/{id}")
-    public String atualizar(@PathVariable Long id, @Valid ClienteDTO cliente, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String atualizar(@PathVariable Long id, @Valid ClienteDTO cliente, BindingResult bindingResult,
+                             Model model, RedirectAttributes redirectAttributes) {
         cliente.setId(id);
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("erro", "Verifique os dados informados.");
-            return "redirect:/clientes";
+            model.addAttribute("erro", "Verifique os dados informados.");
+            model.addAttribute("formCliente", cliente);
+            model.addAttribute("clientes", clienteService.buscarTodos());
+            return "clientes";
         }
         try {
             clienteService.atualizarCliente(cliente);
             redirectAttributes.addFlashAttribute("mensagem", "Cliente atualizado com sucesso.");
+            return "redirect:/clientes";
         } catch (AppCabeleleiroException e) {
-            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+            model.addAttribute("erro", e.getMessage());
+            model.addAttribute("formCliente", cliente);
+            model.addAttribute("clientes", clienteService.buscarTodos());
+            return "clientes";
         }
-        return "redirect:/clientes";
     }
 
     @PostMapping("/{id}/excluir")
