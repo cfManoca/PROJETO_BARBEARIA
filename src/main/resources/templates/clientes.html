@@ -1,122 +1,208 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barbeiros — Barbearia Beco 7</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clientes — Barbearia Beco 7</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/estilo.css}">
-</head>
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/estilo.css}" />
+  </head>
 
-<body>
-
+  <body>
     <div class="app">
-        <div th:replace="~{fragments/comuns :: menu-lateral(pagina='barbeiros')}"></div>
+      <div
+        th:replace="~{fragments/comuns :: menu-lateral(pagina='clientes')}"
+      ></div>
 
-        <div class="area-principal">
-            <main class="conteudo">
-                <div class="container">
-                    <div class="pagina-cabecalho">
-                        <div>
-                            <h1>Barbeiros</h1>
-                            <p>Barbeiros cadastrados na barbearia.</p>
-                        </div>
-                        <a th:if="${formBarbeiro == null}" th:href="@{/barbeiros(novo=true)}"
-                            class="botao botao-primario">Novo Barbeiro</a>
-                    </div>
+      <div class="area-principal">
+        <main class="conteudo">
+          <div class="container">
+            <div
+              class="mensagem erro"
+              th:if="${erro}"
+              th:text="${erro}"
+              style="margin-bottom: 20px"
+            ></div>
+            <div
+              class="mensagem"
+              th:if="${mensagem}"
+              th:text="${mensagem}"
+              style="
+                margin-bottom: 20px;
+                background: rgba(15, 91, 58, 0.2);
+                border: 1px solid #0f5b3a;
+                color: #8fe0b8;
+              "
+            ></div>
+            <div class="pagina-cabecalho">
+              <div>
+                <h1>Clientes</h1>
+                <p>Clientes cadastrados na barbearia.</p>
+              </div>
+              <a
+                th:if="${formCliente == null}"
+                th:href="@{/clientes(novo=true)}"
+                class="botao botao-primario"
+                >Novo Cliente</a
+              >
+            </div>
 
-                    <div class="cartao" style="margin-bottom: 24px;" th:if="${formBarbeiro != null}">
-                        <h3 th:text="${formBarbeiro.id != null} ? 'Editar barbeiro' : 'Novo barbeiro'">Novo barbeiro
-                        </h3>
+            <div
+              class="cartao"
+              style="margin-bottom: 24px"
+              th:if="${formCliente != null}"
+            >
+              <h3
+                th:text="${formCliente.id != null} ? 'Editar cliente' : 'Novo cliente'"
+              >
+                Novo cliente
+              </h3>
 
-                        <form class="formulario"
-                            th:action="${formBarbeiro.id != null} ? @{'/barbeiros/' + ${formBarbeiro.id}} : @{/barbeiros}"
-                            method="post">
-                            <div class="campo">
-                                <label for="nome">Nome</label>
-                                <input id="nome" name="nome" type="text" placeholder="Nome completo do barbeiro"
-                                    th:value="${formBarbeiro.nome}" required>
-                            </div>
-
-                            <div class="campo">
-                                <label for="telefone">Telefone</label>
-                                <input id="telefone" name="telefone" type="tel" placeholder="(75) 99999-9999"
-                                    th:value="${formBarbeiro.telefone}" required>
-                            </div>
-
-                            <div class="campo">
-                                <label for="especialidade">Especialidade</label>
-                                <input id="especialidade" name="especialidade" type="text"
-                                    placeholder="Ex.: Corte e barba" th:value="${formBarbeiro.especialidade}">
-                            </div>
-
-                            <div class="acoes-formulario">
-                                <button type="submit" class="botao botao-primario"
-                                    th:text="${formBarbeiro.id != null} ? 'Salvar alterações' : 'Cadastrar'">Cadastrar</button>
-                                <a th:href="@{/barbeiros}" class="botao botao-secundario">Cancelar</a>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="tabela-responsiva">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Telefone</th>
-                                    <th>Especialidade</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="item : ${barbeiros}">
-                                    <td th:text="${item.nome}">Carlos Silva</td>
-                                    <td th:text="${item.telefone}">(75) 99999-9999</td>
-                                    <td th:text="${item.especialidade}">Corte e barba</td>
-                                    <td class="acoes-tabela">
-                                        <a class="botao botao-pequeno botao-secundario"
-                                            th:href="@{/barbeiros(editar=${item.id})}">Editar</a>
-                                        <form method="post" th:action="@{'/barbeiros/' + ${item.id} + '/excluir'}">
-                                            <button type="submit"
-                                                class="botao botao-pequeno botao-perigo">Excluir</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr th:if="${#lists.isEmpty(barbeiros)}">
-                                    <td class="vazio" colspan="4">Nenhum barbeiro encontrado.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="lista-cartoes">
-                        <div class="item-cartao" th:each="item : ${barbeiros}">
-                            <div class="linha"><span>Nome</span><strong th:text="${item.nome}">Carlos Silva</strong>
-                            </div>
-                            <div class="linha"><span>Telefone</span><strong th:text="${item.telefone}">(75)
-                                    99999-9999</strong></div>
-                            <div class="linha"><span>Especialidade</span><strong th:text="${item.especialidade}">Corte e
-                                    barba</strong></div>
-                            <div class="acoes-tabela">
-                                <a class="botao botao-pequeno botao-secundario"
-                                    th:href="@{/barbeiros(editar=${item.id})}">Editar</a>
-                                <form method="post" th:action="@{'/barbeiros/' + ${item.id} + '/excluir'}">
-                                    <button type="submit" class="botao botao-pequeno botao-perigo">Excluir</button>
-                                </form>
-                            </div>
-                        </div>
-                        <p class="vazio" th:if="${#lists.isEmpty(barbeiros)}">Nenhum barbeiro encontrado.</p>
-                    </div>
+              <form
+                class="formulario"
+                th:action="${formCliente.id != null} ? @{'/clientes/' + ${formCliente.id}} : @{/clientes}"
+                method="post"
+              >
+                <div class="campo">
+                  <label for="nome">Nome</label>
+                  <input
+                    id="nome"
+                    name="nome"
+                    type="text"
+                    placeholder="Nome completo do cliente"
+                    th:value="${formCliente.nome}"
+                    required
+                  />
                 </div>
-            </main>
-        </div>
+
+                <div class="campo">
+                  <label for="telefone">Telefone</label>
+                  <input
+                    id="telefone"
+                    name="telefone"
+                    type="tel"
+                    placeholder="(75) 99999-9999"
+                    th:value="${formCliente.telefone}"
+                    required
+                  />
+                </div>
+
+                <div class="campo">
+                  <label for="email">E-mail</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="cliente@email.com"
+                    th:value="${formCliente.email}"
+                    required
+                  />
+                </div>
+
+                <div class="acoes-formulario">
+                  <button
+                    type="submit"
+                    class="botao botao-primario"
+                    th:text="${formCliente.id != null} ? 'Salvar alterações' : 'Cadastrar'"
+                  >
+                    Cadastrar
+                  </button>
+                  <a th:href="@{/clientes}" class="botao botao-secundario"
+                    >Cancelar</a
+                  >
+                </div>
+              </form>
+            </div>
+
+            <div class="tabela-responsiva">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="item : ${clientes}">
+                    <td th:text="${item.nome}">Maria Souza</td>
+                    <td th:text="${item.telefone}">(75) 99999-9999</td>
+                    <td th:text="${item.email}">maria@email.com</td>
+                    <td class="acoes-tabela">
+                      <a
+                        class="botao botao-pequeno botao-secundario"
+                        th:href="@{/clientes(editar=${item.id})}"
+                        >Editar</a
+                      >
+                      <form
+                        method="post"
+                        th:action="@{'/clientes/' + ${item.id} + '/excluir'}"
+                      >
+                        <button
+                          type="submit"
+                          class="botao botao-pequeno botao-perigo"
+                        >
+                          Excluir
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(clientes)}">
+                    <td class="vazio" colspan="4">
+                      Nenhum cliente encontrado.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lista-cartoes">
+              <div class="item-cartao" th:each="item : ${clientes}">
+                <div class="linha">
+                  <span>Nome</span
+                  ><strong th:text="${item.nome}">Maria Souza</strong>
+                </div>
+                <div class="linha">
+                  <span>Telefone</span
+                  ><strong th:text="${item.telefone}">(75) 99999-9999</strong>
+                </div>
+                <div class="linha">
+                  <span>E-mail</span
+                  ><strong th:text="${item.email}">maria@email.com</strong>
+                </div>
+                <div class="acoes-tabela">
+                  <a
+                    class="botao botao-pequeno botao-secundario"
+                    th:href="@{/clientes(editar=${item.id})}"
+                    >Editar</a
+                  >
+                  <form
+                    method="post"
+                    th:action="@{'/clientes/' + ${item.id} + '/excluir'}"
+                  >
+                    <button
+                      type="submit"
+                      class="botao botao-pequeno botao-perigo"
+                    >
+                      Excluir
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <p class="vazio" th:if="${#lists.isEmpty(clientes)}">
+                Nenhum cliente encontrado.
+              </p>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
 
     <script th:src="@{/js/app.js}" defer></script>
-</body>
-
+  </body>
 </html>
