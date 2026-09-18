@@ -13,6 +13,7 @@ public class AgendamentoViewDTO {
 
     private Long id;
     private String cliente;
+    private String barbeiro;
     private String servico;
     private LocalTime horario;
     private String status;

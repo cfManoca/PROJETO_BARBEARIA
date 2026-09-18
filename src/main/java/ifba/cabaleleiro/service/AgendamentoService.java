@@ -75,12 +75,16 @@ public class AgendamentoService {
     }
 
     private AgendamentoViewDTO paraView(AgendamentoEntity entity) {
-        String nomeCliente = clienteRepository.findById(entity.getClienteId())
-            .map(c -> c.getNome())
-            .orElse("Cliente removido");
+    String nomeCliente = clienteRepository.findById(entity.getClienteId())
+        .map(c -> c.getNome())
+        .orElse("Cliente removido");
 
-        return new AgendamentoViewDTO(
-            entity.getId(), nomeCliente, entity.getServico(),
+    String nomeBarbeiro = barbeiroRepository.findById(entity.getBarbeiroId())
+        .map(b -> b.getNome())
+        .orElse("Barbeiro removido");
+
+    return new AgendamentoViewDTO(
+            entity.getId(), nomeCliente, nomeBarbeiro, entity.getServico(),
             entity.getHorario(), entity.getStatus(),
             StatusAgendamento.paraCss(entity.getStatus())
         );

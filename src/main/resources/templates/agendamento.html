@@ -128,8 +128,9 @@
                     th:each="item : ${agendamentosDoDia}"
                   >
                     <span class="hora" th:text="${item.horario}">08:00</span>
-                    <span th:text="${item.cliente} + ' · ' + ${item.servico}"
-                      >João Silva · Corte</span
+                    <span
+                      th:text="${item.cliente} + ' · ' + ${item.barbeiro} + ' · ' + ${item.servico}"
+                      >João Silva · Felipe Gomes · Corte</span
                     >
                     <span
                       class="selo"
