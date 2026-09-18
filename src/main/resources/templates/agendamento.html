@@ -71,6 +71,20 @@
                 </div>
 
                 <div class="campo">
+                  <label for="barbeiroId">Barbeiro</label>
+                  <select id="barbeiroId" name="barbeiroId" required>
+                    <option value="">Selecione o barbeiro</option>
+                    <option
+                      th:each="item : ${barbeiros}"
+                      th:value="${item.id}"
+                      th:text="${item.nome}"
+                    >
+                      Felipe Gomes
+                    </option>
+                  </select>
+                </div>
+
+                <div class="campo">
                   <label for="servico">Serviço</label>
                   <select id="servico" name="servico" required>
                     <option value="corte">Corte</option>
@@ -96,7 +110,6 @@
                     </div>
                   </div>
                   <input type="hidden" name="horario" />
-                  <input type="hidden" name="barbeiroId" value="1" />
                   <input type="hidden" name="status" value="Agendado" />
                 </div>
 
