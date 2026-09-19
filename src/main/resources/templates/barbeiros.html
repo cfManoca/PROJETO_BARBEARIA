@@ -93,13 +93,27 @@
 
                 <div class="campo">
                   <label for="especialidade">Especialidade</label>
-                  <input
-                    id="especialidade"
-                    name="especialidade"
-                    type="text"
-                    placeholder="Ex.: Corte e barba"
-                    th:value="${formBarbeiro.especialidade}"
-                  />
+                  <select id="especialidade" name="especialidade" required>
+                    <option value="">Selecione a especialidade</option>
+                    <option
+                      value="Corte"
+                      th:selected="${formBarbeiro.especialidade == 'Corte'}"
+                    >
+                      Corte
+                    </option>
+                    <option
+                      value="Barba"
+                      th:selected="${formBarbeiro.especialidade == 'Barba'}"
+                    >
+                      Barba
+                    </option>
+                    <option
+                      value="Corte + Barba"
+                      th:selected="${formBarbeiro.especialidade == 'Corte + Barba'}"
+                    >
+                      Corte + Barba
+                    </option>
+                  </select>
                 </div>
 
                 <div class="acoes-formulario">
